@@ -6,12 +6,28 @@ from uuid import uuid4
 import time
 import logging
 
-from main import (
+
+import sqlite3
+import json
+from dataclasses import dataclass, asdict, field
+from datetime import datetime
+
+# from main import (
+#     triage_agent,
+#     faq_agent,
+#     # seat_booking_agent,
+#     # flight_status_agent,
+#     # cancellation_agent,
+#     telco_prod_rec_agent,
+#     create_initial_context,
+# )
+
+
+
+from telco_main import (
     triage_agent,
-    faq_agent,
-    seat_booking_agent,
-    flight_status_agent,
-    cancellation_agent,
+    telco_prod_rec_agent,
+    RAG_TV_doc_agent,
     create_initial_context,
 )
 
@@ -29,6 +45,7 @@ from agents import (
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
 
 app = FastAPI()
 
@@ -109,10 +126,10 @@ def _get_agent_by_name(name: str):
     """Return the agent object by name."""
     agents = {
         triage_agent.name: triage_agent,
-        faq_agent.name: faq_agent,
-        seat_booking_agent.name: seat_booking_agent,
-        flight_status_agent.name: flight_status_agent,
-        cancellation_agent.name: cancellation_agent,
+        telco_prod_rec_agent.name: telco_prod_rec_agent,
+        RAG_TV_doc_agent.name: RAG_TV_doc_agent,
+
+        
     }
     return agents.get(name, triage_agent)
 
@@ -141,11 +158,51 @@ def _build_agents_list() -> List[Dict[str, Any]]:
         }
     return [
         make_agent_dict(triage_agent),
-        make_agent_dict(faq_agent),
-        make_agent_dict(seat_booking_agent),
-        make_agent_dict(flight_status_agent),
-        make_agent_dict(cancellation_agent),
+        make_agent_dict(telco_prod_rec_agent),
+        make_agent_dict(RAG_TV_doc_agent),
+
     ]
+
+# =======================================
+# Logging Events into SQL Database
+# =======================================
+
+def store_events_to_db(convID, request_msg,resp_message,agent_name):
+
+    if "dont't know" in resp_message:
+        flag_miss = "Missed"
+    else:
+        flag_miss = "Hit"
+
+    log_datetime = str(datetime.now())
+
+    # def save_agent_events_to_sqlite(convID, request_msg,resp_message,agent_name, flag_miss,log_datetime):
+    conn = sqlite3.connect("agent_events.db")
+    c = conn.cursor()
+    # Create table if not exists
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS agent_events (
+            convID TEXT PRIMARY KEY,
+            request_msg TEXT,
+            resp_message TEXT,
+            agent_name TEXT,
+            flag_miss TEXT,
+            log_datetime TEXT
+        )
+    ''')
+    # Insert data
+    c.execute('''
+        INSERT OR REPLACE INTO agent_events (convID, request_msg, resp_message, agent_name, flag_miss, log_datetime)
+        VALUES (?, ?, ?, ?, ?, ?)
+    ''', (convID, request_msg,resp_message,agent_name, flag_miss,log_datetime
+    ))
+    conn.commit()
+    conn.close()
+    # save_agent_events_to_sqlite(convID, request_msg,resp_message,agent_name, flag_miss,log_datetime)
+
+   
+
+
 
 # =========================
 # Main Chat Endpoint
@@ -179,6 +236,7 @@ async def chat_endpoint(req: ChatRequest):
                 agents=_build_agents_list(),
                 guardrails=[],
             )
+            
     else:
         conversation_id = req.conversation_id  # type: ignore
         state = conversation_store.get(conversation_id)
@@ -205,7 +263,7 @@ async def chat_endpoint(req: ChatRequest):
                 passed=(g != failed),
                 timestamp=gr_timestamp,
             ))
-        refusal = "Sorry, I can only answer questions related to airline travel."
+        refusal = "Sorry, I can only answer questions related to telco and TV subsriptions."
         state["input_items"].append({"role": "assistant", "content": refusal})
         return ChatResponse(
             conversation_id=conversation_id,
@@ -335,6 +393,19 @@ async def chat_endpoint(req: ChatRequest):
                 passed=True,
                 timestamp=time.time() * 1000,
             ))
+   
+    # Save to DB
+    #     logging.info("-----")        
+    # logging.info(conversation_id)----
+    # logging.info(req.message)---
+    # logging.info(messages)
+    # logging.info(current_agent.name)
+    # logging.info(events)
+    # logging.info(state["context"].dict())
+    # logging.info(MessageResponse.content)
+    
+
+    store_events_to_db(conversation_id, req.message,"mssg",current_agent.name)
 
     return ChatResponse(
         conversation_id=conversation_id,
@@ -345,3 +416,4 @@ async def chat_endpoint(req: ChatRequest):
         agents=_build_agents_list(),
         guardrails=final_guardrails,
     )
+logging.info(ChatResponse)
