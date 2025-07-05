@@ -6,7 +6,7 @@ import { BookText } from "lucide-react";
 
 interface ConversationContextProps {
   context: {
-    passenger_name?: string;
+    subscriber_name?: string;
     confirmation_number?: string;
     seat_number?: string;
     flight_number?: string;

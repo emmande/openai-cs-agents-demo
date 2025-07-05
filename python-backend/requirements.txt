@@ -3,6 +3,7 @@ pydantic
 fastapi
 uvicorn
 python-dotenv
+faiss-cpu
 langgraph
 langchain
 langchain_core

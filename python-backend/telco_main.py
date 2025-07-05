@@ -38,19 +38,10 @@ from agents import FunctionTool
 
 # # Configure the logger
 # logging.basicConfig(
-#     filename='debugging_log.log',  # Name of the log file
+#     filename='main_debugging.log',  # Name of the log file
 #     level=logging.INFO,         # Set the logging level (e.g., INFO, DEBUG, WARNING, ERROR, CRITICAL)
 #     format='%(asctime)s - %(levelname)s - %(message)s' # Define the log message format
 # )
-
-# # Use the logger instead of print statements
-# logging.info("--------")
-# logging.warning("This is a warning message.")
-# logging.error("This is an error message.")
-
-# def log_function(strLog):
-#     logging.debug(strLog)
-
 
 
 # =========================
@@ -72,7 +63,7 @@ def create_initial_context() -> TelcoAgentContext:
     """
     ctx = TelcoAgentContext()
     ctx.account_number = str(random.randint(10000000, 99999999))
-    fake_names =["John Tan", "Jane Tan", "Walter White", "Gustavo Fring","Saul Goodman", "Simon Lim"]
+    fake_names =["John Tan", "Jane Tan", "Walter White", "Gustavo Fring","Saul Goodman", "Simon Lim", "Sandra Lim", "Hanif Bin Faizal", "Nur Binte Muhammad","Kevin Pillai", "Sudharshan Muralli", "Ajay Kumar"]
     ctx.subscriber_name =  random.choice(fake_names)
     return ctx
 
@@ -164,6 +155,9 @@ async def jailbreak_guardrail(
 # TASK 1 - Simple prod recommendation
 # ======================================
 
+# Current for demo is loading small CSV file to be concatenated into agent instruction
+# Future will have to rethink this approach if there is an exhaustive product list
+
 # Load telco product data from CSV and convert to string
 PRODUCTS_CSV_PATH = "telco_products.csv"  # Path to your CSV file
 df_products = pd.read_csv(PRODUCTS_CSV_PATH)
@@ -204,7 +198,8 @@ def recommend_products(query: str) -> list:
     pass
 
 
-
+#Future improvement of narrowing down context fed into product recommendation agent
+#Similar tool can be applied to roaming recommendation
 @function_tool(
     name_override="prod_lookup_tool", description_override="Lookup telco products."
 )
@@ -217,14 +212,32 @@ async def product_tool(question: str) -> str:
 telco_prod_rec_agent = Agent[TelcoAgentContext](
     name="Telco Product Agent",
     model="gpt-4.1",
-    handoff_description="A helpful agent that can answer questions about telco products and roaming options.",
+    handoff_description="A helpful agent that can answer questions about telco products options.",
     instructions=f"""{RECOMMENDED_PROMPT_PREFIX}
     You are an FAQ agent. If you are speaking to a customer, you probably were transferred to from the triage agent.
     Use the following routine to support the customer.
     1. Identify the last question asked by the customer.
-    2. Do not rely on your own knowledge.Respond to the question only based on \n\n{str_recommend_products } \n\n{str_recommend_roaming}
-    3. Respond to the customer with the answer""",
-    # tools=[product_tool],
+    2. Do not rely on your own knowledge.Respond to the question only based on \n\n{str_recommend_products }
+    3. If the question is specific to roaming or travelling, transfer to roaming_prod_rec_agent
+    4. If the question is how or why regarding Set-up box TV or premier league. transfer to RAG_TV_doc_agent
+    5. Respond to the customer with the answer""",
+    # tools=[product_tool], # for future use
+    input_guardrails=[relevance_guardrail, jailbreak_guardrail],
+)
+
+
+roaming_prod_rec_agent = Agent[TelcoAgentContext](
+    name="Telco Roaming Agent",
+    model="gpt-4.1",
+    handoff_description="A helpful agent that can answer questions about data roaming options.",
+    instructions=f"""{RECOMMENDED_PROMPT_PREFIX}
+    You are an FAQ agent. If you are speaking to a customer, you probably were transferred to from the triage agent or Telco Product Agent.
+    Use the following routine to support the customer.
+    1. Identify the last question asked by the customer.
+    2. Do not rely on your own knowledge. Respond to the question only based on  \n\n{str_recommend_roaming}
+    3. If the question is how or why regarding Set-up box TV or premier league. transfer to RAG_TV_doc_agent
+    4. Respond to the customer with the answer""",
+    # tools=[roaming_tool], # for future use
     input_guardrails=[relevance_guardrail, jailbreak_guardrail],
 )
 
@@ -233,40 +246,34 @@ telco_prod_rec_agent = Agent[TelcoAgentContext](
 # TASK 2 - Simple RAG Pipeline
 # ======================================
 
-# RAG data ingestion and vect pipeline are in pdf_to_vecstore.py
+# RAG data ingestion and vect pipeline are in pdf_to_vecstore_faiss.py
 
 # Document list for TV FAQ
 # Load them as context for RAG
 
 
-def retrieve_docs(query):
-
-    context = connect_and_query_vectordb(query, persist_directory = "./VectorDB",k=3,embedmodel ="text-embedding-3-small")
-    # logging.info(context)
-    return context
-
-# Put this in a TVFAQ function
-
 
 @function_tool(
     name_override="RAG_TVcontext_tool", description_override="Tool that returns the most relevant PDF context for a given query."
 )
-def RAG_TVcontext_tool(query: str) -> str:
+async def RAG_TVcontext_tool(query: str) -> str:
     """Tool that returns the most relevant PDF context for a given query."""
     
-    context= retrieve_docs(query)
-    logging.info(context)
-    # for r in context:
-    #     return f"Source: {r['source']}\nText: {r['text']}\n"
-    return context
+    result = connect_and_query_vectordb(query, persist_directory = "./VectorDB",k=1,embedmodel ="text-embedding-3-small")
+    # logging.info(result)
+    for r in result:
+        return f"Content: {r['page_content']}\nSource: {r['source']}\n"
+
+
+    # return result
 
 RAG_TV_doc_agent = Agent[TelcoAgentContext](
     name="RAG TV doc Agent",
     model="gpt-4.1",
     handoff_description="A helpful agent that can answer questions about the TV subsription, set box, programme documentation .",
     instructions=f"""{RECOMMENDED_PROMPT_PREFIX}
-        Use the RAG_TVcontext_tool to retrieve context and use as relevant information to base your answer. 
-        provide source from  RAG_TVcontext_tool context at the end of your answer
+        Use the RAG_TVcontext_tool to retrieve content and use as relevant information to base your answer. 
+        provide source from  RAG_TVcontext_tool result at the end of your answer
         Answer the user's question using only the returned context.
         If the answer is not present, say you don't know.""",
     tools=[RAG_TVcontext_tool],
@@ -285,14 +292,18 @@ triage_agent = Agent[TelcoAgentContext](
     instructions=(
         f""" {RECOMMENDED_PROMPT_PREFIX} 
         You are a helpful triaging agent. You can use your tools to delegate questions to other appropriate agents. 
-        If about telco products (bundle, wifi, 5G) and roaming data, assign to telco_prod_rec_agent 
-        If it is asking about TV programmes, how to use Singtel TV device, schedule, premiere leagues, Mio TV, set-up box, remote control or TV go, asisgn to RAG_TV_doc_agent"""
+        If about products (bundle, wifi, 5G) and phone devices assign to Telco Product Agent
+        If about roaming or data travelling options (roaming data, rates in destination countries)  assign to Telco Roaming Agent 
+        If it is asking about TV programmes, how to use Singtel TV device, channels, premier league, Mio TV, set-up box, remote control or why connection is slow, asisgn to RAG TV doc Agent"""
     ),
     handoffs=[
         # flight_status_agent,
         # handoff(agent=cancellation_agent, on_handoff=on_cancellation_handoff),
         telco_prod_rec_agent,
+        roaming_prod_rec_agent,
         RAG_TV_doc_agent,
+        
+
    
     ],
     input_guardrails=[relevance_guardrail, jailbreak_guardrail],
@@ -300,5 +311,6 @@ triage_agent = Agent[TelcoAgentContext](
 
 # Set up handoff relationships
 telco_prod_rec_agent.handoffs.append(triage_agent)
+roaming_prod_rec_agent.handoffs.append(triage_agent)
 RAG_TV_doc_agent.handoffs.append(triage_agent)
 

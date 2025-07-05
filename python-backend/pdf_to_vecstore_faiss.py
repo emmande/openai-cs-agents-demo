@@ -17,13 +17,21 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+
+#Hardcoded file sources. Will need to be maitained separately outside of code in the future
+# May need to be maintained in a database
+
 pdfsource=[
             "https://www.singtel.com/content/dam/singtel/personal/products-services/tv/plupdates/SingtelTV_PL_Updates_SingtelTV_FAQs.pdf"
             ,"https://cdn2.singteldigital.com/content/dam/singtel/personal/products-services/tv/apps/tv-go/tv-go-documents/singteltvgo-faqs.pdf"
-
             # "https://www.singtel.com/content/dam/singtel/personal/products-services/mobile/info/bringitback/bring-it-back-tncs-samsung-s24-170124.pdf"
                 ]
 
+
+#---------------------
+# FUNCTION TO CREATE PERSISTENT VECTORDB using FAISS
+# This is to avoid vectorizing whole document again and getting charged if the embedding model is not free
+#---------------------
 def create_vectordb_from_pdfs(pdf_folder, persist_directory, embedmodel ="text-embedding-3-small"):
     # 1. Load PDFs from a directory
     def load_pdf(pdf_folder):
@@ -53,7 +61,10 @@ def create_vectordb_from_pdfs(pdf_folder, persist_directory, embedmodel ="text-e
     vectorstore = FAISS.from_documents(docs, OpenAIEmbeddings(model=embedmodel))
     vectorstore.save_local(f"{persist_directory}/faiss_store")  # Persist to disk
    
-
+#---------------------
+# FUNCTION TO QUERY FROM SAVED PERSISTENT VECTORDB using FAISS
+# This is to avoid vectorizing whole document again and getting charged if the embedding model is not free
+#---------------------
 def connect_and_query_vectordb(query, persist_directory, k=2,embedmodel ="text-embedding-3-small"):
 
     # 1. Load the persistent faiss index
@@ -75,6 +86,10 @@ def connect_and_query_vectordb(query, persist_directory, k=2,embedmodel ="text-e
 
 
 
+#------------------------------------------
+# MANUAL LOADING OF FILES TO VECTOR STORE during setup 
+# Will need to add routine when new files need to be updated into the DB
+# -----------------------------------------
 
 def loadpdf_to_vecdb(pdfsource):
     if os.path.isdir("./VectorDB"):
@@ -84,7 +99,9 @@ def loadpdf_to_vecdb(pdfsource):
         print("new vectordb created")
         create_vectordb_from_pdfs(pdfsource,persist_directory = "./VectorDB",embedmodel="text-embedding-3-small")
         
-
+#------------------------------------------
+# MANUAL Testing functions for semantic search
+# -----------------------------------------
 def test_search(query):
 
     context = connect_and_query_vectordb(query, persist_directory = "./VectorDB",k=1,embedmodel ="text-embedding-3-small")
@@ -92,7 +109,9 @@ def test_search(query):
     return context
 
 
-
+#------------------------------------------
+# Inmemory Vectorstore functions
+# -----------------------------------------
 def Inmemory_RAG_Sourcing(query): # AVOID USING TO PREVENT embedding charges
      
 
@@ -145,4 +164,4 @@ def Inmemory_RAG_Sourcing(query): # AVOID USING TO PREVENT embedding charges
 if __name__ == '__main__':
     #load to a vector db in subfolder VectorDB (If there is none yet - will do one time loading for now and will not add new docs):
     loadpdf_to_vecdb(pdfsource) # load pdf files to vecDB if not yet loaded
-    # test_search("Mio TV premier league")
+   

@@ -1,97 +1,57 @@
 Product_name,Description,Category,Price,Plan Type,Phone Brand,Broadband Speed,Freebies
-Home Fibre 1Gbps,Unlimited fibre broadband for home use,Broadband,49.90,Contract,,1Gbps,Free router installation
-Ultimate TV Pack,Over 100 live channels including sports and movies,TV Subscription,39.90,Monthly,,,""
-Prepaid SuperSaver,Prepaid mobile plan with 30GB data,Prepaid Mobile,15.00,Prepaid,,,""
-Postpaid Max5G,Unlimited 5G data with free weekend calls,Postpaid Mobile,65.00,Postpaid,Samsung,,"Free caller ID, weekend calls"
-Netflix Premium,Streaming service with 4K content,Streaming,19.98,Monthly,,,"1 month free trial"
-Disney+ Bundle,Disney streaming with exclusive content,Streaming,14.98,Monthly,,,"3 months free for new signups"
-Home Fibre 2Gbps,Ultra-fast broadband for heavy users,Broadband,69.90,Contract,,2Gbps,Free WiFi mesh unit
-SIM-Only 120GB,No-contract SIM plan with 120GB data,Prepaid Mobile,18.00,SIM-Only,,,"Free 1GB roaming"
-iPhone 15 Pro Bundle,Latest iPhone with postpaid plan,Postpaid Mobile,98.00,Postpaid,Apple,,"Free AirPods"
-Kids TV Mini,Curated kids’ channels and educational shows,TV Subscription,9.90,Monthly,,,"Parental controls"
-Home Fibre 500Mbps,Affordable fibre broadband for small households,Broadband,39.90,Contract,,500Mbps,Free installation
-Sports TV Plus,Live sports channels including EPL,TV Subscription,29.90,Monthly,,,""
-Prepaid DataXtra,Prepaid plan with 50GB data and unlimited social,Prepaid Mobile,20.00,Prepaid,,,"Free social data"
-Postpaid FamilyShare,Family plan with shared data and calls,Postpaid Mobile,88.00,Postpaid,Apple,,"Free extra SIM"
-Amazon Prime Video,Streaming service with movies and series,Streaming,13.98,Monthly,,,"1 month free trial"
-HBO Max Add-on,Premium HBO streaming add-on,Streaming,11.98,Monthly,,,"First month free"
-Home Fibre 10Gbps,Top-tier fibre for power users,Broadband,99.90,Contract,,10Gbps,Free installation & mesh
-SIM-Only 60GB,Affordable SIM-only plan,Prepaid Mobile,12.00,SIM-Only,,,"Free weekend data"
-Samsung S24 Bundle,Latest Samsung phone with postpaid plan,Postpaid Mobile,108.00,Postpaid,Samsung,,"Free Galaxy Buds"
-Family TV Pack,TV channels for the whole family,TV Subscription,24.90,Monthly,,,"Kids and sports channels"
-Home Fibre 300Mbps,Entry-level broadband for singles,Broadband,29.90,Contract,,300Mbps,Free installation
-Movies TV Max,All movie channels in one pack,TV Subscription,19.90,Monthly,,,""
-Prepaid Youth,Prepaid plan for students with 20GB data,Prepaid Mobile,10.00,Prepaid,,,"Youth exclusive perks"
-Postpaid Unlimited,Unlimited everything plan,Postpaid Mobile,78.00,Postpaid,Apple,,"Free device insurance"
-Apple TV+,Apple’s streaming service,Streaming,9.98,Monthly,,,"3 months free for Apple users"
-Disney+ Kids,Disney streaming for kids,Streaming,7.98,Monthly,,,"Parental controls"
-Home Fibre 1Gbps Pro,Premium broadband with priority support,Broadband,59.90,Contract,,1Gbps,Free priority support
-SIM-Only 30GB,Low-cost SIM-only plan,Prepaid Mobile,8.00,SIM-Only,,,""
-Oppo Reno Bundle,Oppo phone with postpaid plan,Postpaid Mobile,68.00,Postpaid,Oppo,,"Free case"
-Kids TV Learning,Educational TV pack for children,TV Subscription,12.90,Monthly,,,"Learning apps"
-Home Fibre 2Gbps Plus,2Gbps fibre with gaming optimizations,Broadband,79.90,Contract,,2Gbps,Free gaming router
-Sports TV Mini,Entry-level sports TV pack,TV Subscription,14.90,Monthly,,,""
-Prepaid Tourist,Short-term prepaid plan for tourists,Prepaid Mobile,20.00,Prepaid,,,"Free tourist SIM"
-Postpaid Flexi,Customizable postpaid plan,Postpaid Mobile,55.00,Postpaid,Google,,"Flexible contract"
-HBO Asia,Asian HBO streaming add-on,Streaming,8.98,Monthly,,,"First month free"
-Netflix Basic,SD streaming on one device,Streaming,12.98,Monthly,,,""
-Home Fibre 500Mbps Lite,Low-cost broadband for light users,Broadband,34.90,Contract,,500Mbps,"Free WiFi extender"
-SIM-Only 80GB,Mid-tier SIM-only plan,Prepaid Mobile,14.00,SIM-Only,,,"Free caller ID"
-Vivo V30 Bundle,Vivo phone with postpaid plan,Postpaid Mobile,72.00,Postpaid,Vivo,,"Free screen protector"
-Family TV Mini,Mini TV pack for families,TV Subscription,17.90,Monthly,,,""
-Home Fibre 5Gbps,Ultra-fast fibre for tech enthusiasts,Broadband,89.90,Contract,,5Gbps,Free smart home device
-Movies TV Mini,Mini movie channel pack,TV Subscription,9.90,Monthly,,,""
-Prepaid Lite,Entry-level prepaid plan,Prepaid Mobile,5.00,Prepaid,,,""
-Postpaid Youth,Postpaid plan for students,Postpaid Mobile,38.00,Postpaid,Apple,,"Youth exclusive perks"
-Amazon Kids,Amazon streaming for kids,Streaming,6.98,Monthly,,,"Parental controls"
-Disney+ Family,Disney streaming for all ages,Streaming,16.98,Monthly,,,"3 months free for new signups"
-Home Fibre 1Gbps Gamer,Gaming-optimized broadband,Broadband,59.90,Contract,,1Gbps,Free gaming mouse
-SIM-Only 200GB,High-data SIM-only plan,Prepaid Mobile,25.00,SIM-Only,,,"Free 5G upgrade"
-OnePlus 12 Bundle,OnePlus phone with postpaid plan,Postpaid Mobile,92.00,Postpaid,OnePlus,,"Free power bank"
-Kids TV Fun,Fun and games TV pack for kids,TV Subscription,10.90,Monthly,,,""
-Home Fibre 2Gbps Gamer,Gaming-optimized 2Gbps broadband,Broadband,89.90,Contract,,2Gbps,Free gaming keyboard
-Sports TV Max,All sports channels in one pack,TV Subscription,34.90,Monthly,,,""
-Prepaid Senior,Prepaid plan for seniors,Prepaid Mobile,8.00,Prepaid,,,"Senior exclusive perks"
-Postpaid Senior,Postpaid plan for seniors,Postpaid Mobile,29.00,Postpaid,Nokia,,"Senior exclusive perks"
-Apple Music,Music streaming service,Streaming,7.98,Monthly,,,"1 month free trial"
-Netflix Family,4K streaming for the whole family,Streaming,22.98,Monthly,,,"2 months free"
-Home Fibre 1Gbps Lite,Entry-level 1Gbps broadband,Broadband,44.90,Contract,,1Gbps,Free installation
-SIM-Only 10GB,Basic SIM-only plan,Prepaid Mobile,5.00,SIM-Only,,,""
-Huawei P60 Bundle,Huawei phone with postpaid plan,Postpaid Mobile,60.00,Postpaid,Huawei,,"Free earbuds"
-Family TV Kids,Kids-focused family TV pack,TV Subscription,15.90,Monthly,,,""
-Home Fibre 2Gbps Family,2Gbps broadband for families,Broadband,74.90,Contract,,2Gbps,Free parental controls
-Movies TV Family,Family-friendly movie channels,TV Subscription,14.90,Monthly,,,""
-Prepaid DataMax,Prepaid plan with 100GB data,Prepaid Mobile,25.00,Prepaid,,,"Free 5G upgrade"
-Postpaid DataMax,Postpaid plan with 200GB data,Postpaid Mobile,98.00,Postpaid,Samsung,,"Free device insurance"
-Spotify Premium,Music streaming service,Streaming,9.98,Monthly,,,"1 month free trial"
-Disney+ Movies,Disney streaming for movie lovers,Streaming,17.98,Monthly,,,"3 months free for new signups"
-Home Fibre 500Mbps Pro,Premium 500Mbps broadband,Broadband,49.90,Contract,,500Mbps,Free router
-SIM-Only 50GB,Mid-tier SIM-only plan,Prepaid Mobile,10.00,SIM-Only,,,""
-Realme 12 Bundle,Realme phone with postpaid plan,Postpaid Mobile,58.00,Postpaid,Realme,,"Free case"
-Kids TV Extra,Extra kids channels,TV Subscription,11.90,Monthly,,,"Parental controls"
-Home Fibre 1Gbps Family,1Gbps broadband for families,Broadband,54.90,Contract,,1Gbps,Free parental controls
-Sports TV Family,Sports channels for families,TV Subscription,21.90,Monthly,,,""
-Prepaid Roam,Prepaid plan with roaming data,Prepaid Mobile,18.00,Prepaid,,,"Free roaming"
-Postpaid Roam,Postpaid plan with roaming data,Postpaid Mobile,68.00,Postpaid,Apple,,"Free roaming"
-Amazon Prime Family,Amazon streaming for families,Streaming,15.98,Monthly,,,"2 months free"
-Netflix Kids,Netflix streaming for kids,Streaming,8.98,Monthly,,,"Parental controls"
-Home Fibre 2Gbps Gamer Pro,Pro gaming 2Gbps broadband,Broadband,99.90,Contract,,2Gbps,Free gaming headset
-SIM-Only 100GB,High-data SIM-only plan,Prepaid Mobile,20.00,SIM-Only,,,"Free caller ID"
-Xiaomi 14 Bundle,Xiaomi phone with postpaid plan,Postpaid Mobile,66.00,Postpaid,Xiaomi,,"Free fitness band"
-Family TV Max,All-inclusive family TV pack,TV Subscription,29.90,Monthly,,,"Kids, movies, sports"
-Home Fibre 5Gbps Pro,Premium 5Gbps broadband,Broadband,109.90,Contract,,5Gbps,Free WiFi mesh
-Movies TV Kids,Kids movie channel pack,TV Subscription,12.90,Monthly,,,""
-Prepaid Weekend,Prepaid plan with free weekend data,Prepaid Mobile,12.00,Prepaid,,,"Free weekend data"
-Postpaid Weekend,Postpaid plan with free weekend data,Postpaid Mobile,55.00,Postpaid,Samsung,,"Free weekend data"
-Apple TV Family,Apple streaming for families,Streaming,13.98,Monthly,,,"2 months free"
-Disney+ Max,Disney streaming with all features,Streaming,19.98,Monthly,,,"3 months free"
-Home Fibre 300Mbps Lite,Entry-level broadband for students,Broadband,24.90,Contract,,300Mbps,Student perks
-SIM-Only 15GB,Low-data SIM-only plan,Prepaid Mobile,6.00,SIM-Only,,,""
-Oppo A78 Bundle,Oppo phone with postpaid plan,Postpaid Mobile,50.00,Postpaid,Oppo,,"Free case"
-Kids TV Max,All-inclusive kids TV pack,TV Subscription,17.90,Monthly,,,"Parental controls"
-Home Fibre 1Gbps Max,Top-tier 1Gbps broadband,Broadband,69.90,Contract,,1Gbps,Free smart home device
-Sports TV Kids,Sports channels for kids,TV Subscription,13.90,Monthly,,,""
-Prepaid Combo,Combo prepaid plan with data and calls,Prepaid Mobile,16.00,Prepaid,,,"Free caller ID"
-Postpaid Combo,Combo postpaid plan with data and calls,Postpaid Mobile,72.00,Postpaid,Apple,,"Free caller ID"
-Spotify Family,Music streaming for families,Streaming,14.98,Monthly,,,"2 months free"
-Netflix Max,All features Netflix streaming,Streaming,24.98,Monthly,,,"2 months free"
+Home Fibre 1Gbps,Unlimited fibre broadband for home use,Broadband,49.9,Contract,,1Gbps,Free router installation
+Ultimate TV Pack,Over 100 live channels including sports and movies,TV Subscription,39.9,Monthly,,,
+Prepaid SuperSaver,Prepaid mobile plan with 30GB data,Prepaid Mobile,15,Prepaid,,,
+Postpaid Max5G,Unlimited 5G data with free weekend calls,Postpaid Mobile,65,Postpaid,Samsung,,"Free caller ID, weekend calls"
+Netflix Premium,Streaming service with 4K content,Streaming,19.98,Monthly,,,1 month free trial
+Disney+ Bundle,Disney streaming with exclusive content,Streaming,14.98,Monthly,,,3 months free for new signups
+Home Fibre 2Gbps,Ultra-fast broadband for heavy users,Broadband,69.9,Contract,,2Gbps,Free WiFi mesh unit
+SIM-Only 120GB,No-contract SIM plan with 120GB data,Prepaid Mobile,18,SIM-Only,,,Free 1GB roaming
+iPhone 15 Pro Bundle,Latest iPhone with postpaid plan,Postpaid Mobile,98,Postpaid,Apple,,Free AirPods
+Kids TV Mini,Curated kids’ channels and educational shows,TV Subscription,9.9,Monthly,,,Parental controls
+Home Fibre 500Mbps,Affordable fibre broadband for small households,Broadband,39.9,Contract,,500Mbps,Free installation
+Sports TV Plus,Live sports channels including EPL,TV Subscription,29.9,Monthly,,,
+Prepaid DataXtra,Prepaid plan with 50GB data and unlimited social,Prepaid Mobile,20,Prepaid,,,Free social data
+Postpaid FamilyShare,Family plan with shared data and calls,Postpaid Mobile,88,Postpaid,Apple,,Free extra SIM
+Amazon Prime Video,Streaming service with movies and series,Streaming,13.98,Monthly,,,1 month free trial
+HBO Max Add-on,Premium HBO streaming add-on,Streaming,11.98,Monthly,,,First month free
+Home Fibre 10Gbps,Top-tier fibre for power users,Broadband,99.9,Contract,,10Gbps,Free installation & mesh
+SIM-Only 60GB,Affordable SIM-only plan,Prepaid Mobile,12,SIM-Only,,,Free weekend data
+Samsung S24 Bundle,Latest Samsung phone with postpaid plan,Postpaid Mobile,108,Postpaid,Samsung,,Free Galaxy Buds
+Family TV Pack,TV channels for the whole family,TV Subscription,24.9,Monthly,,,Kids and sports channels
+Home Fibre 300Mbps,Entry-level broadband for singles,Broadband,29.9,Contract,,300Mbps,Free installation
+Movies TV Max,All movie channels in one pack,TV Subscription,19.9,Monthly,,,
+Prepaid Youth,Prepaid plan for students with 20GB data,Prepaid Mobile,10,Prepaid,,,Youth exclusive perks
+Postpaid Unlimited,Unlimited everything plan,Postpaid Mobile,78,Postpaid,Apple,,Free device insurance
+Apple TV+,Apple’s streaming service,Streaming,9.98,Monthly,,,3 months free for Apple users
+Disney+ Kids,Disney streaming for kids,Streaming,7.98,Monthly,,,Parental controls
+Home Fibre 1Gbps Pro,Premium broadband with priority support,Broadband,59.9,Contract,,1Gbps,Free priority support
+SIM-Only 30GB,Low-cost SIM-only plan,Prepaid Mobile,8,SIM-Only,,,
+Oppo Reno Bundle,Oppo phone with postpaid plan,Postpaid Mobile,68,Postpaid,Oppo,,Free case
+Kids TV Learning,Educational TV pack for children,TV Subscription,12.9,Monthly,,,Learning apps
+Home Fibre 2Gbps Plus,2Gbps fibre with gaming optimizations,Broadband,79.9,Contract,,2Gbps,Free gaming router
+Sports TV Mini,Entry-level sports TV pack,TV Subscription,14.9,Monthly,,,
+Prepaid Tourist,Short-term prepaid plan for tourists,Prepaid Mobile,20,Prepaid,,,Free tourist SIM
+Postpaid Flexi,Customizable postpaid plan,Postpaid Mobile,55,Postpaid,Google,,Flexible contract
+HBO Asia,Asian HBO streaming add-on,Streaming,8.98,Monthly,,,First month free
+Netflix Basic,SD streaming on one device,Streaming,12.98,Monthly,,,
+Home Fibre 500Mbps Lite,Low-cost broadband for light users,Broadband,34.9,Contract,,500Mbps,Free WiFi extender
+SIM-Only 80GB,Mid-tier SIM-only plan,Prepaid Mobile,14,SIM-Only,,,Free caller ID
+Vivo V30 Bundle,Vivo phone with postpaid plan,Postpaid Mobile,72,Postpaid,Vivo,,Free screen protector
+Family TV Mini,Mini TV pack for families,TV Subscription,17.9,Monthly,,,
+Home Fibre 5Gbps,Ultra-fast fibre for tech enthusiasts,Broadband,89.9,Contract,,5Gbps,Free smart home device
+Movies TV Mini,Mini movie channel pack,TV Subscription,9.9,Monthly,,,
+Prepaid Lite,Entry-level prepaid plan,Prepaid Mobile,5,Prepaid,,,
+Postpaid Youth,Postpaid plan for students,Postpaid Mobile,38,Postpaid,Apple,,Youth exclusive perks
+Amazon Kids,Amazon streaming for kids,Streaming,6.98,Monthly,,,Parental controls
+Disney+ Family,Disney streaming for all ages,Streaming,16.98,Monthly,,,3 months free for new signups
+Home Fibre 1Gbps Gamer,Gaming-optimized broadband,Broadband,59.9,Contract,,1Gbps,Free gaming mouse
+SIM-Only 200GB,High-data SIM-only plan,Prepaid Mobile,25,SIM-Only,,,Free 5G upgrade
+OnePlus 12 Bundle,OnePlus phone with postpaid plan,Postpaid Mobile,92,Postpaid,OnePlus,,Free power bank
+Kids TV Fun,Fun and games TV pack for kids,TV Subscription,10.9,Monthly,,,
+Home Fibre 2Gbps Gamer,Gaming-optimized 2Gbps broadband,Broadband,89.9,Contract,,2Gbps,Free gaming keyboard
+Sports TV Max,All sports channels in one pack,TV Subscription,34.9,Monthly,,,
+Prepaid Senior,Prepaid plan for seniors,Prepaid Mobile,8,Prepaid,,,Senior exclusive perks
+Postpaid Senior,Postpaid plan for seniors,Postpaid Mobile,29,Postpaid,Nokia,,Senior exclusive perks
+Apple Music,Music streaming service,Streaming,7.98,Monthly,,,1 month free trial
+Netflix Family,4K streaming for the whole family,Streaming,22.98,Monthly,,,2 months free

@@ -11,6 +11,8 @@ import sqlite3
 import json
 from dataclasses import dataclass, asdict, field
 from datetime import datetime
+from fastapi import HTTPException, Request
+from fastapi.responses import JSONResponse
 
 # from main import (
 #     triage_agent,
@@ -27,6 +29,7 @@ from datetime import datetime
 from telco_main import (
     triage_agent,
     telco_prod_rec_agent,
+    roaming_prod_rec_agent,
     RAG_TV_doc_agent,
     create_initial_context,
 )
@@ -43,7 +46,9 @@ from agents import (
 )
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, 
+                    filename="app_debugging.log",
+                    format='%(asctime)s - %(levelname)s - %(message)s') # Define the log message format)
 logger = logging.getLogger(__name__)
 
 
@@ -70,6 +75,7 @@ class MessageResponse(BaseModel):
     content: str
     agent: str
 
+
 class AgentEvent(BaseModel):
     id: str
     type: str
@@ -94,6 +100,9 @@ class ChatResponse(BaseModel):
     context: Dict[str, Any]
     agents: List[Dict[str, Any]]
     guardrails: List[GuardrailCheck] = []
+
+
+    
 
 # =========================
 # In-memory store for conversation state
@@ -127,6 +136,7 @@ def _get_agent_by_name(name: str):
     agents = {
         triage_agent.name: triage_agent,
         telco_prod_rec_agent.name: telco_prod_rec_agent,
+        roaming_prod_rec_agent.name: roaming_prod_rec_agent,
         RAG_TV_doc_agent.name: RAG_TV_doc_agent,
 
         
@@ -159,6 +169,7 @@ def _build_agents_list() -> List[Dict[str, Any]]:
     return [
         make_agent_dict(triage_agent),
         make_agent_dict(telco_prod_rec_agent),
+        make_agent_dict(roaming_prod_rec_agent),
         make_agent_dict(RAG_TV_doc_agent),
 
     ]
@@ -166,13 +177,32 @@ def _build_agents_list() -> List[Dict[str, Any]]:
 # =======================================
 # Logging Events into SQL Database
 # =======================================
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    logging.warning(
+        f"HTTP {exc.status_code} error during {request.method} {request.url.path}",
+        extra={
+            "headers": dict(request.headers),
+            "detail": exc.detail
+        }
+    )
+    return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
+
 
 def store_events_to_db(convID, request_msg,resp_message,agent_name):
+    """ logging routine to a sqlite db """
+    #Simple tagging of miss and hit based on certain keywords 
+    #Will need to improve on this later on by implementing a proper classification model
+    flag_miss = "Hit"
+    dontknow = "i don't know"
+    donthave = "i don't have"
+    resp_lower = resp_message.lower()
 
-    if "dont't know" in resp_message:
+
+    if dontknow in resp_lower :
         flag_miss = "Missed"
-    else:
-        flag_miss = "Hit"
+    elif  donthave in resp_lower :
+        flag_miss = "Missed"
 
     log_datetime = str(datetime.now())
 
@@ -198,9 +228,7 @@ def store_events_to_db(convID, request_msg,resp_message,agent_name):
     ))
     conn.commit()
     conn.close()
-    # save_agent_events_to_sqlite(convID, request_msg,resp_message,agent_name, flag_miss,log_datetime)
-
-   
+     
 
 
 
@@ -395,18 +423,13 @@ async def chat_endpoint(req: ChatRequest):
             ))
    
     # Save to DB
-    #     logging.info("-----")        
-    # logging.info(conversation_id)----
-    # logging.info(req.message)---
-    # logging.info(messages)
-    # logging.info(current_agent.name)
-    # logging.info(events)
-    # logging.info(state["context"].dict())
-    # logging.info(MessageResponse.content)
+
+
+    store_events_to_db(conversation_id, req.message,messages[0].content,current_agent.name)
+    logging.info(state["context"].dict())
+    logging.info( events[-1])
+
     
-
-    store_events_to_db(conversation_id, req.message,"mssg",current_agent.name)
-
     return ChatResponse(
         conversation_id=conversation_id,
         current_agent=current_agent.name,
@@ -416,4 +439,3 @@ async def chat_endpoint(req: ChatRequest):
         agents=_build_agents_list(),
         guardrails=final_guardrails,
     )
-logging.info(ChatResponse)
