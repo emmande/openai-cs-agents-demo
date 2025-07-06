@@ -426,8 +426,8 @@ async def chat_endpoint(req: ChatRequest):
 
 
     store_events_to_db(conversation_id, req.message,messages[0].content,current_agent.name)
-    logging.info(state["context"].dict())
-    logging.info( events[-1])
+    # logging.info(state["context"].dict())
+    logging.info( events)
 
     
     return ChatResponse(

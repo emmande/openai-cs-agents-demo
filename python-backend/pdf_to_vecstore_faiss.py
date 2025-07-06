@@ -43,6 +43,9 @@ def create_vectordb_from_pdfs(pdf_folder, persist_directory, embedmodel ="text-e
         return documents
     
     # 2. Split documents into manageable chunks
+       # Will need to look on how to fine-tune chunking for better RAG results 
+       # May need to apply additional cleaning to take out unnecessary contents footers other elements
+       #  
     def split_text(documents):
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=1000,
@@ -127,6 +130,9 @@ def Inmemory_RAG_Sourcing(query): # AVOID USING TO PREVENT embedding charges
         return documents
     
     # 2. Split documents into manageable chunks
+       # Will need to look on how to fine-tune chunking for better RAG results 
+       #May need to apply additional cleaning to take out unnecessary contents footers other elements
+       #  
     def split_text(documents):
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=1000,

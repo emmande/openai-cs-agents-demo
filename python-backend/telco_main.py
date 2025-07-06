@@ -32,6 +32,12 @@ from agents.extensions.handoff_prompt import RECOMMENDED_PROMPT_PREFIX
 
 import pandas as pd
 from agents import FunctionTool
+from dotenv import load_dotenv
+
+
+
+# Load api key variables from .env file into the environment
+load_dotenv()
 
 
 # import logging
@@ -216,11 +222,9 @@ telco_prod_rec_agent = Agent[TelcoAgentContext](
     instructions=f"""{RECOMMENDED_PROMPT_PREFIX}
     You are an FAQ agent. If you are speaking to a customer, you probably were transferred to from the triage agent.
     Use the following routine to support the customer.
-    1. Identify the last question asked by the customer.
+    1. recommend a telco product, bundle or services
     2. Do not rely on your own knowledge.Respond to the question only based on \n\n{str_recommend_products }
-    3. If the question is specific to roaming or travelling, transfer to roaming_prod_rec_agent
-    4. If the question is how or why regarding Set-up box TV or premier league. transfer to RAG_TV_doc_agent
-    5. Respond to the customer with the answer""",
+    3. Respond to the customer with the answer  and then handoff back to the triage agent""",
     # tools=[product_tool], # for future use
     input_guardrails=[relevance_guardrail, jailbreak_guardrail],
 )
@@ -231,12 +235,11 @@ roaming_prod_rec_agent = Agent[TelcoAgentContext](
     model="gpt-4.1",
     handoff_description="A helpful agent that can answer questions about data roaming options.",
     instructions=f"""{RECOMMENDED_PROMPT_PREFIX}
-    You are an FAQ agent. If you are speaking to a customer, you probably were transferred to from the triage agent or Telco Product Agent.
+    You are an FAQ agent. If you are speaking to a customer, you probably were transferred to from the triage agent.
     Use the following routine to support the customer.
-    1. Identify the last question asked by the customer.
+    1. recommend a roaming product 
     2. Do not rely on your own knowledge. Respond to the question only based on  \n\n{str_recommend_roaming}
-    3. If the question is how or why regarding Set-up box TV or premier league. transfer to RAG_TV_doc_agent
-    4. Respond to the customer with the answer""",
+    3. Respond to the customer with the answer and then handoff back to the triage agent""",
     # tools=[roaming_tool], # for future use
     input_guardrails=[relevance_guardrail, jailbreak_guardrail],
 )
@@ -273,9 +276,9 @@ RAG_TV_doc_agent = Agent[TelcoAgentContext](
     handoff_description="A helpful agent that can answer questions about the TV subsription, set box, programme documentation .",
     instructions=f"""{RECOMMENDED_PROMPT_PREFIX}
         Use the RAG_TVcontext_tool to retrieve content and use as relevant information to base your answer. 
-        provide source from  RAG_TVcontext_tool result at the end of your answer
-        Answer the user's question using only the returned context.
-        If the answer is not present, say you don't know.""",
+        provide source or http path from  RAG_TVcontext_tool result at the end of your answer
+        Answer the user's question using only the returned context and then handoff back to the triage agent.
+        If the answer is not present, say you don't know and then handoff back to the triage agent.""",
     tools=[RAG_TVcontext_tool],
     # tools={"RAG_TVcontext_tool": RAG_TVcontext_tool},
     input_guardrails=[relevance_guardrail, jailbreak_guardrail],
@@ -292,9 +295,9 @@ triage_agent = Agent[TelcoAgentContext](
     instructions=(
         f""" {RECOMMENDED_PROMPT_PREFIX} 
         You are a helpful triaging agent. You can use your tools to delegate questions to other appropriate agents. 
-        If about products (bundle, wifi, 5G) and phone devices assign to Telco Product Agent
-        If about roaming or data travelling options (roaming data, rates in destination countries)  assign to Telco Roaming Agent 
-        If it is asking about TV programmes, how to use Singtel TV device, channels, premier league, Mio TV, set-up box, remote control or why connection is slow, asisgn to RAG TV doc Agent"""
+        If about products (bundle, wifi, 5G) and phone devices assign to telco_prod_rec_agent
+        If about roaming or data travelling options (roaming data, rates in destination countries)  assign to roaming_prod_rec_agent 
+        If it is asking about Singtel TV programmes, how to use Singtel TV device, channels, premier league, Mio TV, GO, set-up box, remote control or why connection is slow, asisgn to RAG_TV_doc_agent"""
     ),
     handoffs=[
         # flight_status_agent,
