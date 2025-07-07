@@ -115,10 +115,8 @@ def test_search(query):
 #------------------------------------------
 # Inmemory Vectorstore functions
 # -----------------------------------------
-def Inmemory_RAG_Sourcing(query): # AVOID USING TO PREVENT embedding charges
-     
-
-    pdfsource=["https://www.singtel.com/content/dam/singtel/personal/products-services/tv/plupdates/SingtelTV_PL_Updates_SingtelTV_FAQs.pdf"                ]
+def Inmemory_RAG_ingest():
+    pdfsource=["https://www.singtel.com/content/dam/singtel/personal/products-services/tv/plupdates/SingtelTV_PL_Updates_SingtelTV_FAQs.pdf"]
      
     # 1. Load PDFs from a directory
     def load_pdf(pdfsource):
@@ -143,28 +141,30 @@ def Inmemory_RAG_Sourcing(query): # AVOID USING TO PREVENT embedding charges
 
         return data
     
-
-    try:
-        results = vector_store.similarity_search(query, k=1)
-        context = "\n\n".join([doc.page_content for doc in results])
-        # logging.info(context)
-        return context
-    
-    except:
-
         # prepare for docs for vectorization by running 2 functions above
-        
-        documents = split_text(load_pdf(pdfsource))
-            # embeddings = OllamaEmbeddings(model="deepseek-r1:8b")
-        embeddings = OpenAIEmbeddings(model="text-embedding-3-small") #text-embedding-3-small  text-embedding-3-large
-        vector_store = InMemoryVectorStore(embeddings)
-        vector_store.add_documents(documents)
+    
+    documents = split_text(load_pdf(pdfsource))
+        # embeddings = OllamaEmbeddings(model="deepseek-r1:8b")
+    embeddings = OpenAIEmbeddings(model="text-embedding-3-small") #text-embedding-3-small  text-embedding-3-large
+    vector_store = InMemoryVectorStore(embeddings)
+    vector_store.add_documents(documents)
+
+    return vector_store
+    
 
 
-        results = vector_store.similarity_search(query, k=1)
-        context = "\n\n".join([doc.page_content for doc in results])
-        # logging.info(context)
-        return context
+def Inmemory_RAG_Sourcing(query,vector_store): # AVOID USING TO PREVENT embedding charges
+
+    results = vector_store.similarity_search(query, k=1)
+    output = []
+    for doc in results:
+        item = {
+            "page_content": getattr(doc, "page_content", ""),
+            "source": doc.metadata.get("source", "") if hasattr(doc, "metadata") else ""
+        }
+        output.append(item)
+    return output
+    
 
 
 if __name__ == '__main__':

@@ -8,10 +8,7 @@ from __future__ import annotations as _annotations
 import os
 
 # custom module for pdf file to persistent chromaDB vector store OPTION to avoid multiple vectorizing whole docs in memory
-from pdf_to_vecstore_faiss import (create_vectordb_from_pdfs, connect_and_query_vectordb)
-
-
-
+from pdf_to_vecstore_faiss import (create_vectordb_from_pdfs, connect_and_query_vectordb, Inmemory_RAG_Sourcing,Inmemory_RAG_ingest)
 
 
 import random
@@ -40,15 +37,19 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-# import logging
+import logging
 
-# # Configure the logger
-# logging.basicConfig(
-#     filename='main_debugging.log',  # Name of the log file
-#     level=logging.INFO,         # Set the logging level (e.g., INFO, DEBUG, WARNING, ERROR, CRITICAL)
-#     format='%(asctime)s - %(levelname)s - %(message)s' # Define the log message format
-# )
+logger = logging.getLogger(__name__)
 
+# Configure the logger
+logging.basicConfig(
+    filename='main_debugging.log',  # Name of the log file
+    level=logging.INFO,         # Set the logging level (e.g., INFO, DEBUG, WARNING, ERROR, CRITICAL)
+    format='%(asctime)s - %(levelname)s - %(message)s', # Define the log message format
+    force=True
+)
+
+# logger_main 
 
 # =========================
 # CONTEXT
@@ -254,16 +255,36 @@ roaming_prod_rec_agent = Agent[TelcoAgentContext](
 # Document list for TV FAQ
 # Load them as context for RAG
 
-
+if os.path.isdir("./VectorDB") ==False:
+    imMemStore=Inmemory_RAG_ingest()
 
 @function_tool(
     name_override="RAG_TVcontext_tool", description_override="Tool that returns the most relevant PDF context for a given query."
 )
 async def RAG_TVcontext_tool(query: str) -> str:
     """Tool that returns the most relevant PDF context for a given query."""
-    
-    result = connect_and_query_vectordb(query, persist_directory = "./VectorDB",k=1,embedmodel ="text-embedding-3-small")
+    # result = connect_and_query_vectordb(query, persist_directory = "./VectorDB",k=1,embedmodel ="text-embedding-3-small")
     # logging.info(result)
+    if os.path.isdir("./VectorDB"):
+        result = connect_and_query_vectordb(query, persist_directory = "./VectorDB",k=1,embedmodel ="text-embedding-3-small")
+        logging.info("Persistent DB was used")
+        logging.info(result)
+
+        if not result or len(result) == 0:
+            logging.info("query result is none")
+            return "Query did not return any content"
+
+    else:
+        result = Inmemory_RAG_Sourcing(query, imMemStore)
+        logging.info("In memory was used")
+        logging.info(result)
+       
+        if not result or len(result) == 0:
+            logging.info("query result is none")
+
+            return "Query did not return any content"
+
+
     for r in result:
         return f"Content: {r['page_content']}\nSource: {r['source']}\n"
 
