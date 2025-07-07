@@ -175,7 +175,7 @@ str_recommend_products=df_products.to_string(header=False, index=False, index_na
 ROAMING_CSV_PATH = "roaming_products.csv"  # Path to your CSV file
 df_roaming = pd.read_csv(ROAMING_CSV_PATH)
 
-str_recommend_roaming=df_products.to_string(header=False, index=False, index_names=False)
+str_recommend_roaming=df_roaming.to_string(header=False, index=False, index_names=False)
 
 
 # recommend_products For future use to narrow down products from CSV list
