@@ -41,8 +41,9 @@ After installing all the python dependencies, you'll need to vectorize 2 documen
 ```bash
 python pdf_to_vecstore_faiss.py
 ```
+*note: For deployment where storage is an issue. eg. free tiers on replit. Will have to forego this just use in-memory store*
 
-For the react app UI, you can run. Note an npm :
+For the react app UI, you can run. Note an installation of node.js is needed if not yet installed:
 
 ```bash
 cd ui
@@ -116,13 +117,13 @@ PDF Files --> PDF Loader --> Splitting Text (1000 chunksize and 200 overlap) -->
 
 Similarity Search --> Defined OpenAi-Agent tool to use this search based on chat query --> The RAG agent is instructed to use this defined to ground its answer based on page_content AND specify source based on source metadata (example: https:\\www.FAQs....pdf)
 
-**Some Proposed Technique to improve/Fine Tune **
+**Some Proposed Technique to improve/Fine Tune**
 
 1. Apply some cleaning in the loaded file to remove some unwanted formatting and metadata, footers etc
 2. Refine the chunking/splitting process
 3. Evaluate other vectorstores
 4. In production, ensure PII/confidential data are note exposed to Outside APIs/Models.
-5. Evaluate other approach in the agent. Current approach is just the boiler plate opeanai-agent approach with some mixture of langchain methods. 
+5. Evaluate other approach in the agentic flow. Current approach is just the boiler plate opeanai-agent approach with some mixture of langchain methods. 
 6. Apply some unit testing for agent testing. Expected answers and documents cited on pre-defined sample queries
 
 
@@ -134,8 +135,9 @@ It is possible to integrate this app into a Whatsapp Business Account using Twil
 
 **ANTICIPATED CHALLENGES**
 1. Security challenges and will need to work with the company Network and information Security. It is not just network security, A governance framework should be well defined on what information can be shared with third party (API forwarder and to the LLM model host like OpenAI)
-2. Scaling issue. It should be planned / estimated on what Agents will have the biggest load, Are the vecstor storage up to the demand?
-3. Hallucinations.  Agents should be unit tested. An orchestrator needs to be tested if it is forwarding to an expected agent and individual agents need to be tested for correctness of answers
+2. Scaling issue. It should be planned / estimated on what Agents will have the biggest load and balance resources
+3. Are the vecstor storage up to the demand? Option of scalable tools will need to be considered
+4. Hallucinations.  Agents should be unit tested. An orchestrator needs to be tested if it is forwarding to an expected agent and individual agents need to be tested for correctness of answers
 
 **METRICS TO TRACK**
 
