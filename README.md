@@ -7,6 +7,9 @@ This chat tool Customer Service Agent for an imaginary Telco Company. A triage a
 3. **RAG TV Doc Agent** - A simple agent that grounds it answers on 2 online pdf documents [doc1](https://www.singtel.com/content/dam/singtel/personal/products-services/tv/plupdates/SingtelTV_PL_Updates_SingtelTV_FAQs.pdf) and [doc2](https://cdn2.singteldigital.com/content/dam/singtel/personal/products-services/tv/apps/tv-go/tv-go-documents/singteltvgo-faqs.pdf)
 
 
+**REPLIT DEMO**
+https://07f19183-e867-4714-9509-b75c458fe72e-00-wws568nmff3a.sisko.replit.dev/
+
 ![Demo Screenshot](screenshot.jpg)
 
 A **streamlit app** also tracks the usage, breakdown by agent usage and hit/miss and usage breakdown over time
