@@ -44,7 +44,7 @@ After installing all the python dependencies, you'll need to vectorize 2 documen
 ```bash
 python pdf_to_vecstore_faiss.py
 ```
-*note: For deployment where storage is an issue. eg. free tiers on replit. Will have to forego this just use in-memory store*
+*note: For deployment where storage is an issue. eg. free tiers on replit. Will have to forego this. The tool will automatically just use in-memory store*
 
 For the react app UI, you can run. Note an installation of node.js is needed if not yet installed:
 
@@ -71,7 +71,7 @@ streamlit app
 ```bash
 streamlit run streamlit_dash.py --server.port 8080
 ```
-The chat fast_api + agents backend will be available at: [http://localhost:8080](http://localhost:8080)
+The streamlit dashboard will be available at: [http://localhost:8080](http://localhost:8080)
 
 
 #### Run the UI & backend simultaneously
@@ -137,14 +137,14 @@ Similarity Search --> Defined OpenAi-Agent tool to use this search based on chat
 It is possible to integrate this app into a Whatsapp Business Account using Twilio as a gateway by exposing the Chat App's Fast API endpoint to facilate incoming queries and outgoing answer to customers
 
 **ANTICIPATED CHALLENGES**
-1. Security challenges and will need to work with the company Network and information Security. It is not just network security, A governance framework should be well defined on what information can be shared with third party (API forwarder and to the LLM model host like OpenAI)
-2. Scaling issue. It should be planned / estimated on what Agents will have the biggest load and balance resources
+1. Security challenges and will need to work with the company Network and information Security. It is not just network security, A governance framework should be well defined on what information can be shared with third parties (API forwarder and to the LLM model host like OpenAI)
+2. Scaling issue. It should be planned / estimated on what Agents will have the biggest load. Choosing infra that can balance and scale resources is important
 3. Are the vecstor storage up to the demand? Option of scalable tools will need to be considered
-4. Hallucinations.  Agents should be unit tested. An orchestrator needs to be tested if it is forwarding to an expected agent and individual agents need to be tested for correctness of answers
+4. Hallucinations.  Agents should be unit tested. An orchestrator needs to be tested if it is forwarding to an expected agent and individual agents need to be tested for correctness of answers. Multiple LLM models can be evaluated as well to determine the best model to use
 
 **METRICS TO TRACK**
 
-Possible metrics to track are accuracy, breakdown and some NPS survey coming from direct users/customers. Tracking of accuracy maybe a data science project on its own. There may be some queries with labels on expected answers. This can be used as training set to automate some performance on top of unit testing
+Possible metrics to track are accuracy, breakdown and some NPS survey comming from direct users/customers. Tracking of accuracy maybe a data science project on its own. There may be some queries with labels on expected answers and agent flow. This can be used as training set to automate some performance testing on top of simple unit testing
 
 
 ### Visualization Dashboard  (Task 4)
